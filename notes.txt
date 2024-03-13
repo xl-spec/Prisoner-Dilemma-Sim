@@ -1,0 +1,13 @@
+- game theory with currency of 2+ players
+
+- currency, i can scrape the intrisic value of currency to the bots and their reaction towards the money itself in order to get tangibles
+
+- player responses:
+
+     - lowball
+     - highball
+     - flee (later)
+
+- because context window is finite, i will update the current conversation and 
+possibly give updates on the bot's current performance instead
+- i also currently give it updates on stats which doesn't really eat more tokens than the first iterations of the game loop
