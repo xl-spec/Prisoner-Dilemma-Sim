@@ -1,12 +1,20 @@
-- game theory with currency of 2+ players
-
-- currency, i can scrape the intrisic value of currency to the bots and their reaction towards the money itself in order to get tangibles
+High Level:
+- Prisoner's Dilemma 2+ players using gpt3.5 turbo
+- Characters current have money currency, can later add intrinsic value to the money in order to maybe affect it's performance
+- Can scrape the intrisic value of currency (maybe from reddit idk) to the bots and their reaction towards the money itself in order to get tangibles
 
 - player responses:
-
-     - lowball
-     - highball
+     - y
+     - n
      - flee (later)
+
+  Scenarios
+    Y   N
+  +---+---+
+Y | A | B |
+  +---+---+
+N | C | D |
+  +---+---+
 
 - because context window is finite, i will update the current conversation and 
 possibly give updates on the bot's current performance instead
