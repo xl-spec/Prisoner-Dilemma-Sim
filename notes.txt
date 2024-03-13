@@ -1,5 +1,5 @@
 High Level:
-- Prisoner's Dilemma 2+ players using gpt3.5 turbo
+- Prisoner's Dilemma Remix, 2+ players using gpt3.5 turbo
 - Characters current have money currency, can later add intrinsic value to the money in order to maybe affect it's performance
 - Can scrape the intrisic value of currency (maybe from reddit idk) to the bots and their reaction towards the money itself in order to get tangibles
 - Each character has their own instances and message history, their history are independant from each other, but raw stats of their situation is given (might change later)
@@ -9,12 +9,13 @@ High Level:
      - rules and boundaries
 - role: user
      - this is to give context for the current scenarios that the character is in
+     - also gives a todo, maybe should only be a todo
 - role: assistant
      - this is basically the reply mechanism
-     - player responses:
+     - character responses:
           - y
           - n
-          - flee (later)
+          - flee (later, idk)
 
      - scenarios
      Y   N
@@ -33,6 +34,7 @@ Ideas:
 - could add a layer of perception of the world and other agents rather than giving raw stats of the current simulation
 - maybe i should retain history? but as time moves forward, the history of each day gets trimmed and summarized instead
 - at the end of certain rounds, i could maybe implement a hierarchy of the types of players that ended at the bottom/middle/top
+- possibly giving instructions that are closer to look and feel of words is better than raw numbers
 
 - api https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
@@ -45,3 +47,11 @@ Game Theory Research:
           - methodology has controlled variables such as survival rates, recourses availible, rounds.
           - "LLM can take long-term considerations into account when making decisions, but it does not exhibit a good adaptability"
           - "Simply adding persona information in the system prompt may not effectively simulate the characteristics of certain types of personalities or professional players in depth"
+
+     - https://github.com/jinhaoduan/GTBench
+          - Copy/paste:
+               - System Prompt provides general guidance on how the LLMs should perform.
+               - Head Prompt provides the general background and rules of the game.
+               - Observation Prompt is formatted by a fixed game-wise template, providing sufficient observations from the envi- ronment regarding the current gaming state, to make LLMs capable of making decisions.
+               - Reasoning Prompt guides the LLM’s generation process, e.g., “Let’s think step by step” for the CoT Agent.
+          - 
