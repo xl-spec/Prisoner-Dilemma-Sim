@@ -2,20 +2,46 @@ High Level:
 - Prisoner's Dilemma 2+ players using gpt3.5 turbo
 - Characters current have money currency, can later add intrinsic value to the money in order to maybe affect it's performance
 - Can scrape the intrisic value of currency (maybe from reddit idk) to the bots and their reaction towards the money itself in order to get tangibles
+- Each character has their own instances and message history, their history are independant from each other, but raw stats of their situation is given (might change later)
 
-- player responses:
-     - y
-     - n
-     - flee (later)
+- role: system
+     - the current environment that is setting place
+     - rules and boundaries
+- role: user
+     - this is to give context for the current scenarios that the character is in
+- role: assistant
+     - this is basically the reply mechanism
+     - player responses:
+          - y
+          - n
+          - flee (later)
 
-  Scenarios
-    Y   N
-  +---+---+
-Y | A | B |
-  +---+---+
-N | C | D |
-  +---+---+
+     - scenarios
+     Y   N
+     +---+---+
+     Y | A | B |
+     +---+---+
+     N | C | D |
+     +---+---+
 
-- because context window is finite, i will update the current conversation and 
-possibly give updates on the bot's current performance instead
+Ideas:
+--------
+- because context window is finite, i will update the current conversation and possibly give updates on the bot's current performance instead
 - i also currently give it updates on stats which doesn't really eat more tokens than the first iterations of the game loop
+- have a "day" section where there's a short history of the current day, maybe to relate to decision fatigue? idk
+- if i were to expand this to be multiple players, could involve choice on who they'd like to go up against, introduce bias for ai agents
+- could add a layer of perception of the world and other agents rather than giving raw stats of the current simulation
+- maybe i should retain history? but as time moves forward, the history of each day gets trimmed and summarized instead
+- at the end of certain rounds, i could maybe implement a hierarchy of the types of players that ended at the bottom/middle/top
+
+- api https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
+
+Game Theory Research:
+     - https://github.com/microsoft/Alympics
+          - 2.2 Agent Players, class variables(status), memory (history), behavior/strats
+          - agents has profession, personalities and background info ontop of name, income, and required units to survive
+          - personality also includes IQ/EQ and their basic analysis of their socialibily/problem solving (ish)
+          - finite resources where agents get to bid for water, agents will die if required water isn't obtained
+          - methodology has controlled variables such as survival rates, recourses availible, rounds.
+          - "LLM can take long-term considerations into account when making decisions, but it does not exhibit a good adaptability"
+          - "Simply adding persona information in the system prompt may not effectively simulate the characteristics of certain types of personalities or professional players in depth"

@@ -31,7 +31,7 @@ class Gamestate:
         for character in self.character_list:
             response = self.Gpt.getResponse(character.message_list)
             assistantOutList.append(response.choices[0].message.content)
-
+        # will make a better system to adjust these values, prob in the constructor 
         if assistantOutList[0] == "n" and assistantOutList[1] == "n":
             self.character_list[0].money += 1
             self.character_list[1].money += 1
@@ -52,6 +52,7 @@ class Gamestate:
         self.round += 1
        
     def printGameState(self):
+        # temporary printer, will make better one day
         id = 0
         for character in self.character_list:
             print(f"id: {id}")
