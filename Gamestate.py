@@ -17,9 +17,9 @@ class Gamestate:
         for character in self.character_list:
             character.message_list.append({
                 "role": "system",
-                "content": f"You are a character playing a game against another player with the following rules:\n\n- You and your opponent chooses the response at the same time with the reponse containing ONLY with the string of 'y' for yes and 'n' for no\n- If you and opponent both chooses y, you both gain {self.yy_out} gold\n- If you and opponent both chooses n, you both gain {self.nn_out} gold\n- If you choose y and your opponent chooses n, you gain {self.yn_out} money while your opponent loses {self.yn_out} money\n- If you choose n and your opponent chooses y, you lose {self.yn_out} money while your opponent gains {self.yn_out} money\n\nObjective: make as much money as possible"
+                "content": f"You are a character playing a game against another player with the following rules:\n\n- You and your opponent choose the response at the same time with the reponse containing ONLY with the string of 'y' for yes and 'n' for no. These are your only two options.\n- If you and opponent both chooses y, you both gain {self.yy_out} gold\n- If you and opponent both chooses n, you both gain {self.nn_out} gold\n- If you choose y and your opponent chooses n, you gain {self.yn_out} money while your opponroent loses {self.yn_out} money\n- If you choose n and your opponent chooses y, you lose {self.yn_out} money while your opponent gains {self.yn_out} money\n\nObjective: make as much money as possible"
                 })
-            character.message_list.append({
+            character.message_list.append({ # i will shorted this code later in life, some repetition that idk how to get rid of
                 "role": "user",
                 "content": f"Here is your Game State:\nMoney: 100\nRound: 100\nWon: 0\nLoss: 0\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: n, Example 5: y. Game has started, respond now."
                 })

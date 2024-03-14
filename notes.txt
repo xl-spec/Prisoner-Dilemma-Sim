@@ -7,11 +7,15 @@ High Level:
 - role: system
      - the current environment that is setting place
      - rules and boundaries
+     - maybe give the characteristics here? idk
 - role: user
      - this is to give context for the current scenarios that the character is in
      - also gives a todo, maybe should only be a todo
+     - what to reply with and examples of replies
+     - give updates here as well
 - role: assistant
      - this is basically the reply mechanism
+     - unfortunately is undeterministic so I have to look out for repsonses that aren't y/n
      - character responses:
           - y
           - n
@@ -36,12 +40,14 @@ Ideas:
 - at the end of certain rounds, i could maybe implement a hierarchy of the types of players that ended at the bottom/middle/top
 - possibly giving instructions that are closer to look and feel of words is better than raw numbers
      - instead of giving it a money value, maybe a baseline of income vs average character?
+- inflation, based on the Alympics paper, the model is capable of understanding supply and demand and will ramp up betting if resources are scarce. Maybe provide an update on the current economy and where the bot's starting position was and where it currently is. It's not as important if the bot knows it's opponent as long as it knows the last/summarized version of previous outcomes.
+- future ideas: give AI agent more options as the game progresses? have to expand way more if i were to make this
 - negotiate??
 
 - api https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
 Game Theory Research:
-     - https://github.com/microsoft/Alympics
+     - Alympics https://github.com/microsoft/Alympics
           - 2.2 Agent Players, class variables(status), memory (history), behavior/strats
           - agents has profession, personalities and background info ontop of name, income, and required units to survive
           - personality also includes IQ/EQ and their basic analysis of their socialibily/problem solving (ish)
@@ -50,10 +56,23 @@ Game Theory Research:
           - "LLM can take long-term considerations into account when making decisions, but it does not exhibit a good adaptability"
           - "Simply adding persona information in the system prompt may not effectively simulate the characteristics of certain types of personalities or professional players in depth"
 
-     - https://github.com/jinhaoduan/GTBench
+     - GTBench https://github.com/jinhaoduan/GTBench
           - Copy/paste:
                - System Prompt provides general guidance on how the LLMs should perform.
                - Head Prompt provides the general background and rules of the game.
                - Observation Prompt is formatted by a fixed game-wise template, providing sufficient observations from the envi- ronment regarding the current gaming state, to make LLMs capable of making decisions.
                - Reasoning Prompt guides the LLM’s generation process, e.g., “Let’s think step by step” for the CoT Agent.
           - 
+     - Emergent Cooperation and Strategy Adaptation in Multi-Agent Systems: An Extended Coevolutionary Theory with LLMs
+          - idk lots of jargan and data and stats but doesn't really show methodology that I can personally understand
+
+     - NEGOTIATIONARENA https://github.com/vinid/negotiationarena
+          - negotiate a split of money in a game of Ultimatum. One agent is given all the money and sets the rates and another agent gets to decide to accept or reject
+          - "seller and buyer game is an incomplete information game"
+          - uses XML-like tags to structure their responses, suppose to "minimize hallucinations and remind agents of their state"     
+          - Turn and Role Matter: "order in which an agent goes and its role matters"
+          - Strategic Social Behavior
+               - giving specific personality traits such as cunning and desperate, telling them to humiliate others is a strat that does affect the performance of the given agent
+          - since this used multiple llm models, there were scenarios where prompts didn't work for all of them so they had to adjust it to prompts to work with certain models. In this case it was Claude and llama2
+
+     
