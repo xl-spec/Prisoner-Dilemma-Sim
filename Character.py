@@ -1,10 +1,12 @@
 class Character:
-    def __init__(self, money, won, loss):
+    def __init__(self, money, won, loss, yTie, nTie):
         self.message_list = []
         self.money = money
         self.won = won
         self.loss = loss
-        
+        self.yTie = yTie 
+        self.nTie = nTie
+
     def compareMoney(self, Ops):
         diff = self.money - Ops.money
         if diff < 50:

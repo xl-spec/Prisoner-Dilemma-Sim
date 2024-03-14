@@ -13,7 +13,7 @@ class GptAPI:
                     model = "gpt-3.5-turbo",
                     messages = messages_list,
                     temperature = 1,
-                    max_tokens = 1,
+                    max_tokens = 10,
                     top_p = 1,
                     frequency_penalty = 0,
                     presence_penalty = 0
