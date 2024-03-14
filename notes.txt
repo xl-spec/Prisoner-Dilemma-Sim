@@ -18,11 +18,11 @@ High Level:
           - flee (later, idk)
 
      - scenarios
-     Y   N
+       Y   N
      +---+---+
-     Y | A | B |
+   Y | A | B |
      +---+---+
-     N | C | D |
+   N | C | D |
      +---+---+
 
 Ideas:
@@ -35,7 +35,7 @@ Ideas:
 - maybe i should retain history? but as time moves forward, the history of each day gets trimmed and summarized instead
 - at the end of certain rounds, i could maybe implement a hierarchy of the types of players that ended at the bottom/middle/top
 - possibly giving instructions that are closer to look and feel of words is better than raw numbers
-     - instead of giving it a money, maybe a baseline of income vs average character?
+     - instead of giving it a money value, maybe a baseline of income vs average character?
 - negotiate??
 
 - api https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
