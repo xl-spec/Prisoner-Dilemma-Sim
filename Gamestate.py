@@ -21,12 +21,12 @@ class Gamestate:
                 })
             character.message_list.append({
                 "role": "user",
-                "content": f"Here is your Game State:\nMoney: 100\nRound: 100\nWon: 0\nLoss: 0\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Your response should NOT contain 'i choose' nor 'responce', ONLY reply with a single string. Game has started"
+                "content": f"Here is your Game State:\nMoney: 100\nRound: 100\nWon: 0\nLoss: 0\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: n, Example 5: y. Game has started, respond now."
                 })
             
     def updateMessageList(self):
         for character in self.character_list:
-            updated = f"Here is the Game State:\nMoney: {character.money}\nRound: {self.round}\nWon: {character.won}\nLoss: {character.loss}\n\nYou must respond only with the string \"y\" or \"n\". Game started"
+            updated = f"Here is the Game State:\nMoney: {character.money}\nRound: {self.round}\nWon: {character.won}\nLoss: {character.loss}\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: y, Example 5: y. Game has started, respond now."
             character.message_list[1]["content"] = updated
 
     # for now, it's going to just compare the two object manually
@@ -79,10 +79,25 @@ class Gamestate:
 runner = Gamestate(1, 3, -3, 2)
 runner.initializeSystem()
 runner.runOneTurn()
-runner.printGameState()
 runner.runOneTurn()
-runner.printGameState()
 runner.runOneTurn()
-runner.printGameState()
 runner.runOneTurn()
-runner.printGameState()
+runner.runOneTurn()
+runner.runOneTurn()
+runner.runOneTurn()
+runner.runOneTurn()
+# runner.printGameState()
+# runner.runOneTurn()
+# runner.printGameState()
+# runner.runOneTurn()
+# runner.printGameState()
+# runner.runOneTurn()
+# runner.printGameState()
+# runner.runOneTurn()
+# runner.printGameState()
+# runner.runOneTurn()
+# runner.printGameState()
+# runner.runOneTurn()
+# runner.printGameState()
+# runner.runOneTurn()
+# runner.printGameState()
