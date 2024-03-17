@@ -1,11 +1,12 @@
+# This is designed for the intent to convert raw numbers into adverbs for prompting
+# will use f-strings to make this work somehow
+class Interpret:
+    def __init__(self, Obj1, Obj2):
+        self.Obj1 = Obj1
+        self.Obj2 = Obj2
 
-class Evaluator:
-    def __init__(self) -> None:
-        pass
-
-
-    def compareMoney(self, char1, char2):
-        diff = char1.money - char2.money
+    def compareMoney(self):
+        diff = self.Obj1.money - self.Obj1.money
         if diff < 50:
             return "significantly less"
         elif diff < 25:

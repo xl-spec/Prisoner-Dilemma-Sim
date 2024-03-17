@@ -29,6 +29,10 @@ High Level:
    N | C | D |
      +---+---+
 
+- Class Interpret
+     - need to play with the concept of more/less and using that as a determinator for -/+ of a number
+     - adverb + pronoun 
+
 Ideas:
 --------
 - because context window is finite, i will update the current conversation and possibly give updates on the bot's current performance instead

@@ -17,7 +17,7 @@ class Gamestate:
         for character in self.character_list:
             character.message_list.append({
                 "role": "system",
-                "content": f"You are a character playing a game against another player with the following rules:\n\n- You and your opponent choose the response at the same time with the reponse containing ONLY with the string of 'y' for yes and 'n' for no. These are your only two options.\n- If you and opponent both chooses y, you both gain {self.yy_out} gold\n- If you and opponent both chooses n, you both gain {self.nn_out} gold\n- If you choose y and your opponent chooses n, you gain {self.yn_out} money while your opponroent loses {self.yn_out} money\n- If you choose n and your opponent chooses y, you lose {self.yn_out} money while your opponent gains {self.yn_out} money\n\nObjective: make as much money as possible"
+                "content": f"You are a character playing a game against another player with the following: \nRules:\n- You and your opponent choose the response at the same time with the reponse containing ONLY with the string of 'y' for yes and 'n' for no. These are your only two options.\n- If you and opponent both chooses n, you both lose some gold\n- If you and opponent both chooses y, you both a lot of gold\n- If you choose y and your opponent chooses n, you lose no gold while your opponent loses a lot of gold\n- If you choose n and your opponent chooses y, you lose a lots of gold while your opponent lose no gold\nObjective: \n- Save as much gold as possible\n\nYou will be updated on \n"
                 })
             character.message_list.append({ # i will shorted this code later in life, some repetition that idk how to get rid of
                 "role": "user",
@@ -29,9 +29,8 @@ class Gamestate:
             updated = f"Here is the Game State:\nMoney: {character.money}\nRound: {self.round}\nWon: {character.won}\nLoss: {character.loss}\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: y, Example 5: y. Game has started, respond now."
             character.message_list[1]["content"] = updated
 
-    # for now, it's going to just compare the two object manually
     def runResponse(self):
-        res = []
+        res = [] # response will be stored and accessed and evaluated with conditions
         for character in self.character_list:
             response = self.Gpt.getResponse(character.message_list)
             res.append(response.choices[0].message.content)
@@ -76,7 +75,7 @@ class Gamestate:
         self.runResponse()
         self.updateMessageList()
 
-runner = Gamestate(1, 3, -3, 2)
+runner = Gamestate(1, 3, -3, 2) # 
 runner.initializeSystem()
 runner.runOneTurn()
 runner.runOneTurn()
