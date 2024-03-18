@@ -47,10 +47,11 @@ Ideas:
 - inflation, based on the Alympics paper, the model is capable of understanding supply and demand and will ramp up betting if resources are scarce. Maybe provide an update on the current economy and where the bot's starting position was and where it currently is. It's not as important if the bot knows it's opponent as long as it knows the last/summarized version of previous outcomes.
 - future ideas: give AI agent more options as the game progresses? have to expand way more if i were to make this
 - negotiate??
+- trait counter, have a trait that's newly learned but has a set count, as days decrease, the count decrements if it isn't being used
 
 - api https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
-Game Theory Research:
+LLM Research:
      - Alympics https://github.com/microsoft/Alympics
           - 2.2 Agent Players, class variables(status), memory (history), behavior/strats
           - agents has profession, personalities and background info ontop of name, income, and required units to survive
@@ -79,4 +80,5 @@ Game Theory Research:
                - giving specific personality traits such as cunning and desperate, telling them to humiliate others is a strat that does affect the performance of the given agent
           - since this used multiple llm models, there were scenarios where prompts didn't work for all of them so they had to adjust it to prompts to work with certain models. In this case it was Claude and llama2
 
-     
+     - Is There Any Social Principle for LLM-Based Agents?
+          - bunch of ai agents interracting and learning from each other

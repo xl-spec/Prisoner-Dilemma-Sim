@@ -1,6 +1,7 @@
 # import random
 from Character import Character
 from GptAPI import GptAPI
+from Interpret import Interpret
 
 class Gamestate:
     def __init__(self, yy_out, yn_out, ny_out, nn_out):

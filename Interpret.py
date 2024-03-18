@@ -6,18 +6,27 @@ class Interpret:
         self.Obj2 = Obj2
 
     def compareMoney(self):
-        diff = self.Obj1.money - self.Obj1.money
-        if diff < 50:
-            return "significantly less"
-        elif diff < 25:
-            return "a lot less"
-        elif diff < 0:
-            return "little bit less"
-        elif diff == 0:
+        relation = self.isMoreLessEqual(self.Obj1.money, self.Obj2.money)
+        significance = self.isSignificance(self.Obj1.money, self.Obj2.money)
+        
+        if relation == "equal":
             return "equal"
-        elif diff > 0:
-            return "little bit more"
+        else:
+            return f"{significance} {relation}"
+    
+    def isMoreLessEqual(self, num1, num2):
+        if num1 < num2:
+            return "less"
+        elif num1 == num2:
+            return "equal"
+        elif num1 > num2:
+            return "more"
+    
+    def isSignificance(self, num1, num2):
+        diff = abs(num1 - num2)
+        if diff > 50:
+            return "significantly"
         elif diff > 25:
-            return "a lot more"
-        elif diff > 50:
-            return "significantly more"
+            return "a lot"
+        elif diff > 0:
+            return "little bit"
