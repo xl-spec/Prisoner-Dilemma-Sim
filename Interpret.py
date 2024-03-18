@@ -28,4 +28,4 @@ class Interpret:
         elif diff > 25:
             return "a lot"
         elif diff > 0:
-            return "a little bit"
+            return "a little"
