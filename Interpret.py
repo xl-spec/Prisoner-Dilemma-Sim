@@ -1,13 +1,12 @@
 # This is designed for the intent to convert raw numbers into adverbs for prompting
 # will use f-strings to make this work somehow
 class Interpret:
-    def __init__(self, Obj1, Obj2):
-        self.Obj1 = Obj1
-        self.Obj2 = Obj2
+    def __init__(self):
+        pass
 
-    def compareMoney(self):
-        relation = self.isMoreLessEqual(self.Obj1.money, self.Obj2.money)
-        significance = self.isSignificance(self.Obj1.money, self.Obj2.money)
+    def compare(self, num1, num2):
+        relation = self.isMoreLessEqual(num1, num2)
+        significance = self.isSignificance(num1, num2)
         
         if relation == "equal":
             return "equal"
@@ -29,4 +28,4 @@ class Interpret:
         elif diff > 25:
             return "a lot"
         elif diff > 0:
-            return "little bit"
+            return "a little bit"
