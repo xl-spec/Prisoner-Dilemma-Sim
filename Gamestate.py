@@ -1,23 +1,27 @@
 # import random
+import time
 from Character import Character
-from GptAPI import GptAPI
+# from GptAPI import GptAPI
 from Interpret import Interpret
-
+from WorldStats import WorldStats
+from Arena import Arena
 
 class Gamestate:
     def __init__(self, yy_out, yn_out, ny_out, nn_out, nMoney, nPlayers = 2): # Gamestate(-2, -3, 0, -1, 100)
-        self.yy_out = yy_out
-        self.yn_out = yn_out
-        self.ny_out = ny_out
-        self.nn_out = nn_out
+        self.outcomes = [yy_out, yn_out, ny_out, nn_out]
         self.nMoney = nMoney
         self.nPlayers = nPlayers
         # i think will keep this as there is a 1v1 aspect, but need to change the loop of character creation and pass this through 
-        self.character_list = [Character(self.nMoney, 0, 0, 0, 0), Character(self.nMoney, 0, 0, 0, 0)]
-        self.Gpt = GptAPI()
+        self.character_list = []
+        self.arena = Arena()
         self.interpret = Interpret()
+        # self.world = WorldStats(self.character_list)
         self.round = 0
-        self.turnRes = []
+
+
+    def initializeCharacters(self):
+        for _ in range(self.nPlayers):
+            self.character_list.append(Character(self.nMoney, 0, 0, 0, 0))
 
     def initializeSystem(self):
         for character in self.character_list:
@@ -45,46 +49,11 @@ class Gamestate:
             # updates the element 1 of message_list
             character.message_list[1]["content"] = updated
 
-    def runResponse(self):
-        res = [] # response will be stored and accessed and evaluated with conditions
-        for character in self.character_list:
-            notValid = True
-            # temporary fix to prevent invalid response
-            while notValid:
-                response = self.Gpt.getResponse(character.message_list)
-                messageContent = response.choices[0].message.content.strip().lower() # strip().lower() might be useless
-
-                if messageContent in ['y', 'n']:
-                    res.append(messageContent)
-                    notValid = False
-                else:
-                    print(f"Invalid response received: {messageContent}. Requesting again.")
-        self.turnRes = res
-    
-    def updateCharacters(self):
-        # Key: -2, -3, 0, -1
-        if self.turnRes == ["y", "y"]:
-            self.character_list[0].money += self.yy_out
-            self.character_list[1].money += self.yy_out
-            self.character_list[0].yTie += 1
-            self.character_list[1].yTie += 1
-        elif self.turnRes == ["n", "n"]:
-            self.character_list[0].money += self.nn_out
-            self.character_list[1].money += self.nn_out
-            self.character_list[0].nTie += 1
-            self.character_list[1].nTie += 1
-        elif self.turnRes == ["y", "n"]:
-            self.character_list[0].money += self.yn_out
-            self.character_list[1].money += self.ny_out
-            self.character_list[0].won += 1
-            self.character_list[1].loss += 1
-        elif self.turnRes == ["n", "y"]:
-            self.character_list[0].money += self.ny_out
-            self.character_list[1].money += self.yn_out
-            self.character_list[0].loss += 1
-            self.character_list[1].won += 1
-
-        print(f"res: {self.turnRes}")
+    def runRound(self):
+        # for now, i will manually put 2 characters in, not ready to full scale this
+        character_pool = [self.character_list[0], self.character_list[1]]
+        self.arena.getResponse(character_pool)
+        self.arena.updateCharacters(character_pool, self.outcomes)
         self.round += 1
        
     def printGameState(self):
@@ -96,28 +65,40 @@ class Gamestate:
             print(f"money: {character.money}")
             print(f"won: {character.won}")
             print(f"loss: {character.loss}")
-            print(f"msg list: \n{character.message_list[1]['content']}")
+            print(f"ties: {character.nTie + character.yTie}")
+            # print(f"msg list: \n{character.message_list[1]['content']}")
             print(f"-----")
             id += 1
-        
+        print(f"-------------")
     def runOneTurn(self):
-        self.runResponse()
-        self.updateCharacters()
+        self.runRound()
         self.updateMessageList()
 
+    # def gameOver(self):
+    #     count = 0
+    #     for character in self.character_list:
+    #         if character.money <= 0:
+    #             count += 1
+    #     if count == self.nPlayers:
+    #         return False
+    #     return True
     def gameOver(self):
         for character in self.character_list:
             if character.money <= 0:
                 return False
+            
         return True
 
 runner = Gamestate(-2, -3, 0, -1, 30)
+runner.initializeCharacters()
 runner.initializeSystem()
 runner.printGameState()
 while runner.gameOver():
-
     runner.runOneTurn()
+    # time.sleep(2)
+    # print("?")
     runner.printGameState()
+
 # runner.printGameState()
 # runner.runOneTurn()
 # runner.printGameState()

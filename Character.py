@@ -6,3 +6,4 @@ class Character:
         self.loss = loss
         self.yTie = yTie 
         self.nTie = nTie
+        self.curRes = ""
