@@ -15,9 +15,8 @@ class Gamestate:
         self.character_list = []
         self.arena = Arena()
         self.interpret = Interpret()
-        # self.world = WorldStats(self.character_list)
+        self.world = WorldStats()
         self.round = 0
-
 
     def initializeCharacters(self):
         for _ in range(self.nPlayers):
@@ -33,47 +32,40 @@ class Gamestate:
                 "role": "user",
                 "content": f"Here is your Game State:\nMoney: {character.money}\nRound: {self.round}\nIncome disparity: You have equal gold compared to your opponent \nWin disparity: You have equal wins compared to your opponent\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: n, Example 5: y. Game has started, respond now."
                 })
-            
-    def updateMessageList(self):
-        incomeDisparityString0 = self.interpret.compare(self.character_list[0].money, self.character_list[1].money)
-        incomeDisparityString1 = self.interpret.compare(self.character_list[1].money, self.character_list[0].money)
-        winDisparityString0 = self.interpret.compare(self.character_list[0].won, self.character_list[1].won)
-        winDisparityString1 = self.interpret.compare(self.character_list[1].won, self.character_list[0].won)
-        
-        for index, character in enumerate(self.character_list):
-            incomeDisparityString = incomeDisparityString0 if index == 0 else incomeDisparityString1
-            winDisparityString = winDisparityString0 if index == 0 else winDisparityString1
-
-            updated = f"Here is your Game State:\nMoney: {character.money}\nRound: {self.round}\nIncome disparity: You have {incomeDisparityString} gold compared to your opponent \nWin disparity: You have {winDisparityString} wins compared to your opponent\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: n, Example 5: y. Game has started, respond now."
-
-            # updates the element 1 of message_list
-            character.message_list[1]["content"] = updated
 
     def runRound(self):
-        # for now, i will manually put 2 characters in, not ready to full scale this
-        character_pool = [self.character_list[0], self.character_list[1]]
-        self.arena.getResponse(character_pool)
-        self.arena.updateCharacters(character_pool, self.outcomes)
-        self.round += 1
+        # for now, i will manually put 2 characters in, not ready to full scale this. but will have to think of a system
+        # character_pool = [self.character_list[0], self.character_list[1]]
+        character_queue = [self.character_list]
+        while len(character_queue) >= 2:
+            character_pool = [character_queue.pop(), character_queue.pop()]
+            self.arena.getResponse(character_pool)
+            self.arena.updateCharacters(character_pool, self.outcomes)
+            self.arena.updateMessage(character_pool, self.round)
+            self.round += 1
        
     def printGameState(self):
         # temporary printer, will make better one day
-        id = 0
+        id = 65
         for character in self.character_list:
-            print(f"id: {id}")
+            print(f"id:    {chr(id)}")
             print(f"round: {self.round}")
             print(f"money: {character.money}")
-            print(f"won: {character.won}")
-            print(f"loss: {character.loss}")
-            print(f"ties: {character.nTie + character.yTie}")
-            # print(f"msg list: \n{character.message_list[1]['content']}")
+            print(f"won:   {character.won}")
+            print(f"loss:  {character.loss}")
+            print(f"ties:  {character.nTie + character.yTie}")
+            print(f"res:   {character.curRes}")
+            print(f"msg list: \n{character.message_list[1]['content']}")
             print(f"-----")
             id += 1
         print(f"-------------")
+
+    # this function might not be needed
     def runOneTurn(self):
         self.runRound()
-        self.updateMessageList()
+        self.world.getAverages(self.character_list)
 
+    # # I am unsure of how to handle gameover as this is a simulation, temporarily gonna just make it if character is bankrupt
     # def gameOver(self):
     #     count = 0
     #     for character in self.character_list:

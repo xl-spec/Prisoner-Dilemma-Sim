@@ -35,22 +35,33 @@ High Level:
 
 Ideas:
 --------
-- because context window is finite, i will update the current conversation and possibly give updates on the bot's current performance instead
-- i also currently give it updates on stats which doesn't really eat more tokens than the first iterations of the game loop
-- have a "day" section where there's a short history of the current day, maybe to relate to decision fatigue? idk
-- if i were to expand this to be multiple players, could involve choice on who they'd like to go up against, introduce bias for ai agents
-- could add a layer of perception of the world and other agents rather than giving raw stats of the current simulation
-- maybe i should retain history? but as time moves forward, the history of each day gets trimmed and summarized instead
-- at the end of certain rounds, i could maybe implement a hierarchy of the types of players that ended at the bottom/middle/top
-- possibly giving instructions that are closer to look and feel of words is better than raw numbers
-     - instead of giving it a money value, maybe a baseline of income vs average character?
-- inflation, based on the Alympics paper, the model is capable of understanding supply and demand and will ramp up betting if resources are scarce. Maybe provide an update on the current economy and where the bot's starting position was and where it currently is. It's not as important if the bot knows it's opponent as long as it knows the last/summarized version of previous outcomes.
-- future ideas: give AI agent more options as the game progresses? have to expand way more if i were to make this
-- negotiate??
-- trait counter, have a trait that's newly learned but has a set count, as days decrease, the count decrements if it isn't being used
+     - because context window is finite, i will update the current conversation and possibly give updates on the bot's current performance instead
+     - i also currently give it updates on stats which doesn't really eat more tokens than the first iterations of the game loop
+     - have a "day" section where there's a short history of the current day, maybe to relate to decision fatigue? idk
+     - if i were to expand this to be multiple players, could involve choice on who they'd like to go up against, introduce bias for ai agents
+     - could add a layer of perception of the world and other agents rather than giving raw stats of the current simulation
+     - maybe i should retain history? but as time moves forward, the history of each day gets trimmed and summarized instead
+     - at the end of certain rounds, i could maybe implement a hierarchy of the types of players that ended at the bottom/middle/top
+     - possibly giving instructions that are closer to look and feel of words is better than raw numbers
+          - instead of giving it a money value, maybe a baseline of income vs average character?
+     - inflation, based on the Alympics paper, the model is capable of understanding supply and demand and will ramp up betting if resources are scarce. Maybe provide an update on the current economy and where the bot's starting position was and where it currently is. It's not as important if the bot knows it's opponent as long as it knows the last/summarized version of previous outcomes.
+     - future ideas: give AI agent more options as the game progresses? have to expand way more if i were to make this
+     - negotiate??
+     - trait counter, have a trait that's newly learned but has a set count, as days decrease, the count decrements if it isn't being used
+     - give agents jobs eventually, maybe even give characters with high gold ability to buy certain perks that gives them long-term advantages but hurts other agents, track personality advantages
+     - I think i need to play with the openai playground more, especially since I don't understand the understand the underlying math on why it's choosing the responses it's choosing. that can be tricky when i would want to somewhat mimic human responses. 
+     - maybe if i fiddle with the playground enough, i can get it to pick which agents it wants to go up against? that can be intestesting to test out
+     - i think i should firstly work on concurrently doing all these games and making my own dataset, i am not sure
+     - to get over certain hurdles such as not finding a match, will do batches of powers of 2 so a bracket will always be formed, ie. 2, 4, 8, 16, 32, 64, 128. i think i prob shouldn't do too much
+     - 20% controls 80% of wealth, might need to consider a class system idk
 
 - api https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
+Scope:
+     - give personality? to characters
+     - leaderboard of the characters
+     - i should probably add support for multiple characters for now and go from there.
+     - should also test the global features and see how that affects anything
 LLM Research:
      - Alympics https://github.com/microsoft/Alympics
           - 2.2 Agent Players, class variables(status), memory (history), behavior/strats
@@ -82,3 +93,7 @@ LLM Research:
 
      - Is There Any Social Principle for LLM-Based Agents?
           - bunch of ai agents interracting and learning from each other
+          - talks about the human allignment and how ai agents can either get close to it or allignment themselves with something completely different, describes this as evolving past human allignment i guess
+          - can either keep ai agents more allgined with humans or let them diverge naturally. fundamentally though, they originated from human alignment. 
+          - whatever alignment that ai agents are, it is still unknown technically
+          - "behavior of agents is related to their number in the community"

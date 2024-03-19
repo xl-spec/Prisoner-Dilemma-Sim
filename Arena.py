@@ -1,8 +1,10 @@
 # creates the 1v1 scenario from two of the objects in character_pool
 from GptAPI import GptAPI
+from Interpret import Interpret
 class Arena:
     def __init__(self):
         self.Gpt = GptAPI()
+        self.interpret = Interpret()
 
     def getResponse(self, character_pool):
         res = [] # response will be stored and accessed and evaluated with conditions
@@ -47,3 +49,17 @@ class Arena:
             character_pool[0].loss += 1
             character_pool[1].won += 1
 
+    def updateMessage(self, character_pool, round):
+        incomeDisparityString0 = self.interpret.compare(character_pool[0].money, character_pool[1].money)
+        incomeDisparityString1 = self.interpret.compare(character_pool[1].money, character_pool[0].money)
+        winDisparityString0 = self.interpret.compare(character_pool[0].won, character_pool[1].won)
+        winDisparityString1 = self.interpret.compare(character_pool[1].won, character_pool[0].won)
+        
+        for index, character in enumerate(character_pool):
+            incomeDisparityString = incomeDisparityString0 if index == 0 else incomeDisparityString1
+            winDisparityString = winDisparityString0 if index == 0 else winDisparityString1
+
+            updated = f"Here is your Game State:\nMoney: {character.money}\nRound: {round}\nIncome disparity: You have {incomeDisparityString} gold compared to your opponent \nWin disparity: You have {winDisparityString} wins compared to your opponent\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: n, Example 5: y. Game has started, respond now."
+
+            # updates the element 1 of message_list
+            character.message_list[1]["content"] = updated

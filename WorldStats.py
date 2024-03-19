@@ -1,17 +1,16 @@
 class WorldStats:
-    def __init__(self, character_list):
-        self.character_list = character_list
-        self.avgMoney
-        self.avgWin
-        self.avgLoss
+    def __init__(self):
+        self.avgMoney = 0
+        self.avgWin = 0
+        self.avgLoss = 0
 
-    def getAverages(self):
+    def getAverages(self, character_list):
         money = 0
         win = 0
         loss = 0
-        for character in self.character_list:
+        for character in character_list:
             money += character.money
-            win += character.win
+            win += character.won
             loss += character.loss
 
         self.avgMoney = money
