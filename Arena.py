@@ -20,9 +20,10 @@ class Arena:
                     notValid = False
                 else:
                     print(f"Invalid response received: {messageContent}. Requesting again.")
-        # self.turnRes = res
+
         for i, character in enumerate(character_pool):
             character.curRes = res[i]
+            character.resHistory.append(res[i])
         
     def updateCharacters(self, character_pool, outcomes):
         # Key: -2, -3, 0, -1
@@ -41,13 +42,13 @@ class Arena:
         elif list_res == ["y", "n"]:
             character_pool[0].money += outcomes[1]
             character_pool[1].money += outcomes[2]
-            character_pool[0].won += 1
-            character_pool[1].loss += 1
+            character_pool[0].loss += 1
+            character_pool[1].won += 1
         elif list_res == ["n", "y"]:
             character_pool[0].money += outcomes[2]
             character_pool[1].money += outcomes[1]
-            character_pool[0].loss += 1
-            character_pool[1].won += 1
+            character_pool[0].won += 1
+            character_pool[1].loss += 1
 
     def updateMessage(self, character_pool, round):
         incomeDisparityString0 = self.interpret.compare(character_pool[0].money, character_pool[1].money)

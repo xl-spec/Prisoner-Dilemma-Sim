@@ -1,4 +1,4 @@
-# import random
+import random
 import time
 from Character import Character
 # from GptAPI import GptAPI
@@ -7,7 +7,7 @@ from WorldStats import WorldStats
 from Arena import Arena
 
 class Gamestate:
-    def __init__(self, yy_out, yn_out, ny_out, nn_out, nMoney, nPlayers = 2): # Gamestate(-2, -3, 0, -1, 100)
+    def __init__(self, yy_out, yn_out, ny_out, nn_out, nMoney, nPlayers): # Gamestate(-2, -3, 0, -1, 100)
         self.outcomes = [yy_out, yn_out, ny_out, nn_out]
         self.nMoney = nMoney
         self.nPlayers = nPlayers
@@ -19,8 +19,8 @@ class Gamestate:
         self.round = 0
 
     def initializeCharacters(self):
-        for _ in range(self.nPlayers):
-            self.character_list.append(Character(self.nMoney, 0, 0, 0, 0))
+        for i in range(self.nPlayers):
+            self.character_list.append(Character(i, self.nMoney, 0, 0, 0, 0))
 
     def initializeSystem(self):
         for character in self.character_list:
@@ -32,32 +32,30 @@ class Gamestate:
                 "role": "user",
                 "content": f"Here is your Game State:\nMoney: {character.money}\nRound: {self.round}\nIncome disparity: You have equal gold compared to your opponent \nWin disparity: You have equal wins compared to your opponent\n\nYou MUST respond only with the single string of 'y' or 'n'. Reply only with a 'y' for yes or an 'n' for no. Do NOT under any circumstance reply with any other string of text. Here are examples of how your responses. Example 1: y,Example 2: n, Example 3: n, Example 4: n, Example 5: y. Game has started, respond now."
                 })
-
+            
+    # scuffed but works
+    def checkBroke(self, queue_list):
+        new_list = []
+        for character in queue_list:
+            if character.money > 0:
+                new_list.append(character)
+        return new_list
+    
     def runRound(self):
-        # for now, i will manually put 2 characters in, not ready to full scale this. but will have to think of a system
-        # character_pool = [self.character_list[0], self.character_list[1]]
-        character_queue = [self.character_list]
+        character_queue = self.character_list[:]
+        character_queue = self.checkBroke(character_queue)
+        random.shuffle(character_queue)
         while len(character_queue) >= 2:
             character_pool = [character_queue.pop(), character_queue.pop()]
             self.arena.getResponse(character_pool)
             self.arena.updateCharacters(character_pool, self.outcomes)
             self.arena.updateMessage(character_pool, self.round)
-            self.round += 1
-       
+        self.round += 1
+
     def printGameState(self):
         # temporary printer, will make better one day
-        id = 65
         for character in self.character_list:
-            print(f"id:    {chr(id)}")
-            print(f"round: {self.round}")
-            print(f"money: {character.money}")
-            print(f"won:   {character.won}")
-            print(f"loss:  {character.loss}")
-            print(f"ties:  {character.nTie + character.yTie}")
-            print(f"res:   {character.curRes}")
-            print(f"msg list: \n{character.message_list[1]['content']}")
-            print(f"-----")
-            id += 1
+            print(f"id: {character.id} round: {self.round} money: {character.money} won: {character.won} loss: {character.loss} ties: {character.nTie + character.yTie} res: {character.resHistory}")
         print(f"-------------")
 
     # this function might not be needed
@@ -66,28 +64,37 @@ class Gamestate:
         self.world.getAverages(self.character_list)
 
     # # I am unsure of how to handle gameover as this is a simulation, temporarily gonna just make it if character is bankrupt
-    # def gameOver(self):
-    #     count = 0
-    #     for character in self.character_list:
-    #         if character.money <= 0:
-    #             count += 1
-    #     if count == self.nPlayers:
-    #         return False
-    #     return True
     def gameOver(self):
+        count = 1
         for character in self.character_list:
             if character.money <= 0:
-                return False
-            
+                count += 1
+        if count == self.nPlayers:
+            self.declareWinner()
+            return False
         return True
+    # def gameOver(self):
+    #     for character in self.character_list:
+    #         if character.money <= 0:
+    #             # self.declareWinner()
+    #             return False
+            
+    #     return True
+    
+    def declareWinner(self):
+        # XDDDD edge case where remaining characters all go bust
+        for character in self.character_list:
+            if character.money > 0:
+                print(f"winner: {character.id} history: {character.resHistory}")
+        return False
 
-runner = Gamestate(-2, -3, 0, -1, 30)
+runner = Gamestate(-2, -3, 0, -1, 30, 16)
 runner.initializeCharacters()
 runner.initializeSystem()
 runner.printGameState()
 while runner.gameOver():
     runner.runOneTurn()
-    # time.sleep(2)
+    time.sleep(2)
     # print("?")
     runner.printGameState()
 

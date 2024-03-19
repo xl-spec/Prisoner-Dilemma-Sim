@@ -97,3 +97,6 @@ LLM Research:
           - can either keep ai agents more allgined with humans or let them diverge naturally. fundamentally though, they originated from human alignment. 
           - whatever alignment that ai agents are, it is still unknown technically
           - "behavior of agents is related to their number in the community"
+
+     - Shall We Talk: Exploring Spontaneous Collaborations of Competing LLM Agents
+          - this is a lot of code and analysis, i will read this later lol
