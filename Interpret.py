@@ -23,9 +23,9 @@ class Interpret:
     
     def isSignificance(self, num1, num2):
         diff = abs(num1 - num2)
-        if diff > 50:
+        if diff > 20:
             return "significantly"
-        elif diff > 25:
+        elif diff > 10:
             return "a lot"
         elif diff > 0:
             return "a little"

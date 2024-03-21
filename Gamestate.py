@@ -1,7 +1,7 @@
 import random
 import time
+import pandas as pd
 from Character import Character
-# from GptAPI import GptAPI
 from Interpret import Interpret
 from WorldStats import WorldStats
 from Arena import Arena
@@ -17,6 +17,7 @@ class Gamestate:
         self.interpret = Interpret()
         self.world = WorldStats()
         self.round = 0
+        self.game_states = []
 
     def initializeCharacters(self):
         for i in range(self.nPlayers):
@@ -56,6 +57,16 @@ class Gamestate:
         # temporary printer, will make better one day
         for character in self.character_list:
             print(f"id: {character.id} round: {self.round} money: {character.money} won: {character.won} loss: {character.loss} ties: {character.nTie + character.yTie} res: {character.resHistory}")
+            game_state = {
+                'id': character.id,
+                'round': self.round,
+                'money': character.money,
+                'won': character.won,
+                'loss': character.loss,
+                'ties': character.nTie + character.yTie,
+                'res': character.resHistory
+            }
+            self.game_states.append(game_state)
         print(f"-------------")
 
     # this function might not be needed
@@ -69,34 +80,30 @@ class Gamestate:
         for character in self.character_list:
             if character.money <= 0:
                 count += 1
-        if count == self.nPlayers:
+        if count >= self.nPlayers:
             self.declareWinner()
+            self.exportGameStatesToCSV()
             return False
         return True
-    # def gameOver(self):
-    #     for character in self.character_list:
-    #         if character.money <= 0:
-    #             # self.declareWinner()
-    #             return False
-            
-    #     return True
+    
+    def exportGameStatesToCSV(self, filename='Data/game_states.csv'):
+        # Convert the list of game states to a pandas DataFrame
+        df = pd.DataFrame(self.game_states)
+        # Export the DataFrame to a CSV file
+        df.to_csv(filename, index=False)
     
     def declareWinner(self):
         # XDDDD edge case where remaining characters all go bust
+        winner = False
         for character in self.character_list:
             if character.money > 0:
+                winner = True
                 print(f"winner: {character.id} history: {character.resHistory}")
+        if not winner:
+            print(f"no winners this time around")
+
         return False
 
-runner = Gamestate(-2, -3, 0, -1, 30, 16)
-runner.initializeCharacters()
-runner.initializeSystem()
-runner.printGameState()
-while runner.gameOver():
-    runner.runOneTurn()
-    time.sleep(2)
-    # print("?")
-    runner.printGameState()
 
 # runner.printGameState()
 # runner.runOneTurn()

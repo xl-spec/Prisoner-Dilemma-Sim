@@ -55,6 +55,8 @@ Ideas:
      - to get over certain hurdles such as not finding a match, will do batches of powers of 2 so a bracket will always be formed, ie. 2, 4, 8, 16, 32, 64, 128. i think i prob shouldn't do too much
      - 20% controls 80% of wealth, might need to consider a class system idk
 
+     - does using words affect agent performance?
+
 - api https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
 Scope:
