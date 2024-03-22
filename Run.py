@@ -27,7 +27,6 @@ class Run:
             self.runner.initializeCharacters()
             self.runner.initializeSystem()
             self.runner.printGameState()
-            # self.runner.updateGamestateCSV()
             while self.runner.roundOver():
                 self.runner.updateGamestateCSV()
                 self.runner.runOneTurn()
@@ -43,7 +42,7 @@ class Run:
         return self.runsLeft < self.runs
 
 # runner = Gamestate(-2, -3, 0, -1, 1, 8, 2)
-run_instance = Run(-2, -3, 0, -1, 1, 8, 2)
+run_instance = Run(-2, -3, 0, -1, 50, 8, 10)
 run_instance.runGame()
 # runner.initializeCharacters()
 # runner.initializeSystem()
