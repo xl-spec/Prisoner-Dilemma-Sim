@@ -7,16 +7,14 @@ from WorldStats import WorldStats
 from Arena import Arena
 
 class Gamestate:
-    def __init__(self, yy_out, yn_out, ny_out, nn_out, nMoney, nPlayers, runs): # Gamestate(-2, -3, 0, -1, 100)
+    def __init__(self, yy_out, yn_out, ny_out, nn_out, nMoney, nPlayers): # Gamestate(-2, -3, 0, -1, 100)
         self.outcomes = [yy_out, yn_out, ny_out, nn_out]
         self.nMoney = nMoney
         self.nPlayers = nPlayers
-        self.runs = runs
-        self.runsLeft = 0
-        self.character_list = []
         self.arena = Arena()
         self.interpret = Interpret()
         self.world = WorldStats()
+        self.character_list = []
         self.turn = 0
         self.game_states = []
         self.remaining_players = []
@@ -59,6 +57,11 @@ class Gamestate:
         # temporary printer, will make better one day
         for character in self.character_list:
             print(f"id: {character.id} turn: {self.turn} money: {character.money} won: {character.won} loss: {character.loss} ties: {character.nTie + character.yTie} res: {character.resHistory}")
+        print(f"-------------")
+
+    def updateGamestateCSV(self):
+        print("updating gamestate csv")
+        for character in self.character_list:
             game_state = {
                 'id': character.id,
                 'turn': self.turn,
@@ -66,11 +69,9 @@ class Gamestate:
                 'won': character.won,
                 'loss': character.loss,
                 'ties': character.nTie + character.yTie,
-                'res': character.resHistory
+                'res': character.resHistory[:]
             }
             self.game_states.append(game_state)
-        print(f"-------------")
-
     # this function might not be needed
     def runOneTurn(self):
         self.runTurn()
@@ -84,25 +85,8 @@ class Gamestate:
                 count += 1
         if count >= self.nPlayers:
             self.declareWinner()
-            self.runsLeft += 1
-            self.exportGameStatesToCSV(self.runsLeft)
-            # self.initializeCharacters()
-            # self.initializeSystem()
             return False
         return True
-    
-    def gameOver(self):
-        if self.runsLeft == self.runs:
-            return False
-        return True
-    
-    def exportGameStatesToCSV(self, runsLeft, filename='Data/game_states'):
-        
-        # Convert the list of game states to a pandas DataFrame
-        df = pd.DataFrame(self.game_states)
-        filename += f"{runsLeft}.csv"
-        # Export the DataFrame to a CSV file
-        df.to_csv(filename, index=False)
     
     def declareWinner(self):
         winner = False
@@ -115,13 +99,19 @@ class Gamestate:
 
         return False
 
-runner = Gamestate(-2, -3, 0, -1, 1, 8, 2)
-runner.initializeCharacters()
-runner.initializeSystem()
-runner.printGameState()
-while runner.gameOver():
-    runner.runOneTurn()
-    runner.printGameState()
+    def reset(self):
+        self.character_list = []
+        self.turn = 0
+        self.game_states = []
+        self.remaining_players = []
+
+# runner = Gamestate(-2, -3, 0, -1, 1, 8, 2)
+# runner.initializeCharacters()
+# runner.initializeSystem()
+# runner.printGameState()
+# while runner.gameOver():
+#     runner.runOneTurn()
+#     runner.printGameState()
 
     # def getRunLeft(self):
     #     if
