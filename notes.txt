@@ -102,3 +102,8 @@ LLM Research:
 
      - Shall We Talk: Exploring Spontaneous Collaborations of Competing LLM Agents
           - this is a lot of code and analysis, i will read this later lol
+
+     States as Strings as Strategies: Steering Language Models with Game-Theoretic Solvers
+          - incorporates full history for the players, makes a tree on all the decisions that are made
+          - "a history represents the true ground/world state: when agents act, they change this history, but depending on how the partition is chosen, some actions (including chance’s) may be private and not revealed to some players"
+          - "construct a model of dialogue in natural language with an awareness that this is a modelling choice"

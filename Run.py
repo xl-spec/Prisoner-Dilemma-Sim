@@ -1,7 +1,11 @@
 from Gamestate import Gamestate
+class Run:
+    def __init__(self) -> None:
+        pass
 
-
-runner = Gamestate(-2, -3, 0, -1, 1, 8)
+    def gameOver(self):
+        pass
+runner = Gamestate(-2, -3, 0, -1, 1, 8, 2)
 runner.initializeCharacters()
 runner.initializeSystem()
 runner.printGameState()
